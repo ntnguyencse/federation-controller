@@ -47,7 +47,7 @@ func TestGetDiscoveryClient(t *testing.T) {
 	logger := zap.New()
 	logf.SetLogger(logger)
 
-	runtimecomponent := createRuntimeComponent(name, namespace, spec)
+	runtimecomponent := createRuntimeComponent(objMeta, spec)
 	objs, s := []runtime.Object{runtimecomponent}, scheme.Scheme
 	s.AddKnownTypes(appstacksv1beta2.GroupVersion, runtimecomponent)
 	cl := fakeclient.NewFakeClient(objs...)
@@ -67,7 +67,7 @@ func TestCreateOrUpdate(t *testing.T) {
 	logf.SetLogger(logger)
 	serviceAccount := &corev1.ServiceAccount{ObjectMeta: defaultMeta}
 
-	runtimecomponent := createRuntimeComponent(name, namespace, spec)
+	runtimecomponent := createRuntimeComponent(objMeta, spec)
 	objs, s := []runtime.Object{runtimecomponent}, scheme.Scheme
 	s.AddKnownTypes(appstacksv1beta2.GroupVersion, runtimecomponent)
 	cl := fakeclient.NewFakeClient(objs...)
@@ -88,7 +88,7 @@ func TestDeleteResources(t *testing.T) {
 	logger := zap.New()
 	logf.SetLogger(logger)
 
-	runtimecomponent := createRuntimeComponent(name, namespace, spec)
+	runtimecomponent := createRuntimeComponent(objMeta, spec)
 	objs, s := []runtime.Object{runtimecomponent}, scheme.Scheme
 	s.AddKnownTypes(appstacksv1beta2.GroupVersion, runtimecomponent)
 	cl := fakeclient.NewFakeClient(objs...)
@@ -141,7 +141,7 @@ func TestGetOpConfigMap(t *testing.T) {
 		},
 	}
 
-	runtimecomponent := createRuntimeComponent(name, namespace, spec)
+	runtimecomponent := createRuntimeComponent(objMeta, spec)
 	objs, s := []runtime.Object{runtimecomponent}, scheme.Scheme
 	s.AddKnownTypes(appstacksv1beta2.GroupVersion, runtimecomponent)
 	cl := fakeclient.NewFakeClient(objs...)
@@ -167,7 +167,7 @@ func TestManageError(t *testing.T) {
 	logf.SetLogger(logger)
 	err := fmt.Errorf("test-error")
 
-	runtimecomponent := createRuntimeComponent(name, namespace, spec)
+	runtimecomponent := createRuntimeComponent(objMeta, spec)
 	objs, s := []runtime.Object{runtimecomponent}, scheme.Scheme
 	s.AddKnownTypes(appstacksv1beta2.GroupVersion, runtimecomponent)
 	cl := fakeclient.NewFakeClient(objs...)
@@ -188,7 +188,7 @@ func TestManageSuccess(t *testing.T) {
 	logger := zap.New()
 	logf.SetLogger(logger)
 
-	runtimecomponent := createRuntimeComponent(name, namespace, spec)
+	runtimecomponent := createRuntimeComponent(objMeta, spec)
 	objs, s := []runtime.Object{runtimecomponent}, scheme.Scheme
 	s.AddKnownTypes(appstacksv1beta2.GroupVersion, runtimecomponent)
 	cl := fakeclient.NewFakeClient(objs...)
@@ -207,7 +207,7 @@ func TestIsGroupVersionSupported(t *testing.T) {
 	logger := zap.New()
 	logf.SetLogger(logger)
 
-	runtimecomponent := createRuntimeComponent(name, namespace, spec)
+	runtimecomponent := createRuntimeComponent(objMeta, spec)
 	objs, s := []runtime.Object{runtimecomponent}, scheme.Scheme
 	s.AddKnownTypes(appstacksv1beta2.GroupVersion, runtimecomponent)
 	cl := fakeclient.NewFakeClient(objs...)
@@ -244,7 +244,7 @@ func TestIsGroupVersionSupported(t *testing.T) {
 func testGetSvcTLSValues(t *testing.T) {
 	// Configure the runtime component
 
-	runtimecomponent := createRuntimeComponent(name, namespace, spec)
+	runtimecomponent := createRuntimeComponent(objMeta, spec)
 	expose := true
 	runtimecomponent.Spec.Expose = &expose
 	runtimecomponent.Spec.Service = &appstacksv1beta2.RuntimeComponentService{
@@ -285,7 +285,7 @@ func testGetSvcTLSValues(t *testing.T) {
 // testGetRouteTLSValues test the function GetRouteTLSValues in reconciler.go.
 func testGetRouteTLSValues(t *testing.T) {
 	// Configure the rumtime component
-	runtimecomponent := createRuntimeComponent(name, namespace, spec)
+	runtimecomponent := createRuntimeComponent(objMeta, spec)
 	terminationPolicy := routev1.TLSTerminationReencrypt
 	secretRefName := "my-app-route-tls"
 	runtimecomponent.Spec.Expose = &expose
